@@ -16,7 +16,15 @@ int main() {
 
     string source = file_uitls::read("main.cmm");
 
-    auto tokens = string_utils::tokenize(source, regex(R"([\w]+|\->|[(){}\->])"));
+    list<string> tokens;
+
+    try {
+        tokens = string_utils::tokenize(source, regex(R"([\w]+|\->|[(){}])"));
+    } catch(regex_error& e)
+    {
+        cout << "Regex error code " << e.code() << ": "
+             << e.what() << endl;
+    }
 
     string_utils::print_tokens(tokens);
 
